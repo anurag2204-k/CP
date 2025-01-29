@@ -1,1 +1,28 @@
-.exe
+# Ignore executable files anywhere in the directory
+*.exe
+*.out
+
+# Ignore C++ compilation related files
+*.o
+*.obj
+
+# Ignore Visual Studio files if you use it
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+# Ignore VSCode settings if you use it
+.vscode/
+
+# Keep all your .cpp source files
+!*.cpp
+
+# If you use input/output text files for testing
+input.txt
+output.txt
+test.txt
+
+# Operating system files
+.DS_Store
+Thumbs.db
