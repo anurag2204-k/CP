@@ -125,7 +125,38 @@ int powI(int a, int b){
 
 
 void solve() {
-    
+    int n; cin>>n;
+    vector<pair<int,int>> v;
+    int m=0;
+
+    for(int i=0; i<n; i++){
+        int x, y; cin>>x>>y;
+        v.push_back({x,y});
+        m=max(m,max(x,y));
+    }
+    int ans=1e9;
+    int s=0, e=m;
+    while(s<=e){
+        int mid = s+ (e-s)/2;
+        int l=0,r=0;
+        int flag = true;
+        int cur = 0;
+        for(int i=0; i<n; i++){
+            l=max(l - mid, v[i].first);
+            r = min(r+mid, v[i].second);
+            if(l>r){
+                flag=false;
+                break;
+            }
+        }
+        if(flag){
+            ans = mid;
+            e=mid-1;
+        }
+        else
+        s=mid+1;
+    }
+    cout<<ans<<endl;
      
 }
 
@@ -138,3 +169,15 @@ signed main() {
     
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+

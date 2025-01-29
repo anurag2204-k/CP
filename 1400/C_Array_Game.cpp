@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// #define int long long int
+#define int long long int
 #define d1(x) cout << #x << ": " << x << endl
 #define d2(x, y) cout << #x << ": " << x << " | " << #y << ": " << y << endl
 #define d3(x, y, z) cout << #x << ":" << x << " | " << #y << ": " << y << " | " << #z << ": " << z << endl
@@ -125,8 +125,39 @@ int powI(int a, int b){
 
 
 void solve() {
-    
-     
+    int n; cin>>n;
+    int k; cin>>k;
+    vector<int>v;
+    for(int i=0; i<n; i++){
+        int x; cin>>x;
+        v.push_back(x);
+    }
+    if(k>=3){
+        cout<<0<<endl;
+        return;
+    }
+    sort(all(v));
+    int m = v[0];
+    for(int i=0; i<n-1; i++){
+        m = min(m, abs(v[i]-v[i+1]));
+    }
+    if(k==1){
+        cout<<m<<endl;
+        return;
+    }
+    for(int i=0; i<n ; i++){
+        for(int j=i+1; j<n; j++){
+            int dif = abs(v[i]-v[j]);
+            int p = lower_bound(v.begin(),v.end(),dif)-v.begin();
+            if(p<n){
+                m = min(m, abs(v[p]-dif));
+            }
+            if(p>0){
+                m = min(m, dif-v[p-1]);
+            }
+        }
+    }
+    cout<<m<<endl;
 }
 
 signed main() {
