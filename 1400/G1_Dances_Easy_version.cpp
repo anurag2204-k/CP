@@ -176,25 +176,33 @@ void inOrder(Node* head){
     return;
 }
 
+void solve(){
+    int n, m; 
+    cin>>n>>m;
+    vi a(n),b(n);
+    a[0]=1;
+    f(i,1,n) cin>>a[i];
+    f(i,0,n) cin>>b[i];
+    sort(all(a));
+    sort(all(b));
+    int i;
+    auto prevIdx = b.begin();
+    for(i=0; i<n; i++){
+        int val = a[i];
+        auto idx = upper_bound(prevIdx,b.end(), val);
+        if(idx != b.end()){
+            prevIdx = idx+1;
+        }
+        else{
+            break;
+        }
+    }
+    cout<< n-i<<endl;
+}
 
 int main(){
     int t; cin>>t;
     while(t--){
-        int n; cin>>n;
-        vector<int> a(n);
-        int c0=0, c1=0;
-        for(int i=0; i<n; i++) {
-            cin>>a[i];
-            if(a[i]&1)
-                c1++;
-            else
-                c0++;
-        }
-        if(c0>=1){
-            cout<<c1+1<<endl;
-        }else{
-            cout<<c1-1<<endl;
-        }
-        
+        solve();
     }
 }

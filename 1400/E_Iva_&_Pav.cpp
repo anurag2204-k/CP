@@ -176,25 +176,65 @@ void inOrder(Node* head){
     return;
 }
 
+void solve(){
+    int n;
+    cin>>n;
+    vector<vector<int>> v(n,vector<int>(30,0));
+    for(int i=0 ; i<n; i++){
+        int x; cin>>x;
+        int j=0;
+        while(x){
+            v[i][j]=x&1;
+            x=x>>1;
+            j++;
+        }
+    }
+    for(int i=1; i<n; i++){
+        for(int j=0; j<30; j++){
+            v[i][j] = v[i][j] + v[i-1][j];
+        }
+    }
+
+    int q; cin>>q;
+    while(q--){
+        int l, k;
+        cin>>l>>k;
+        l--;
+        int r=n-1;
+        int ans=-2;
+        int lo = l;
+        while(lo<=r){
+            int mid = lo + (r-lo)/2;
+            int cal = 0;
+            for(int i=0; i<30 ; i++){
+                int c = l==0 ? v[mid][i] : v[mid][i] - v[l-1][i];
+                if(c >= mid-l+1)
+                {
+                    cal = cal | (1<<i);
+                }
+            }
+            if(cal>=k){
+                ans = max(ans, mid);
+                lo = mid+1;
+            }else{
+                r=mid-1;
+            }
+        }
+        cout<<ans+1<<endl;
+    }
+
+
+    // for(int i=0 ; i<n; i++){
+    //     for(int j=0 ; j<30; j++){
+    //         cout<<v[i][j]<<" ";
+    //     }
+    //     cout<<endl;
+    // }
+}
 
 int main(){
     int t; cin>>t;
     while(t--){
-        int n; cin>>n;
-        vector<int> a(n);
-        int c0=0, c1=0;
-        for(int i=0; i<n; i++) {
-            cin>>a[i];
-            if(a[i]&1)
-                c1++;
-            else
-                c0++;
-        }
-        if(c0>=1){
-            cout<<c1+1<<endl;
-        }else{
-            cout<<c1-1<<endl;
-        }
-        
+        solve();
     }
 }

@@ -124,77 +124,62 @@ int powI(int a, int b){
 // if M is prime, (a^b)%M = a ^ (b% phi(M-1)) % M
 
 
-// void solve() {
-    
-     
-// }
-
-// signed main() {
-//     ios_base::sync_with_stdio(false);
-//     cin.tie(nullptr);
-//     int t; cin>>t;
-//     while(t--)
-//     solve();
-    
-//     return 0;
-// }
-struct Node{
-    int data;
-    Node* left, *right;
-    Node(int val){
-        data=val;
-        left=nullptr;
-        right=nullptr;
+void solve() {
+    int n;
+    cin>>n;
+    string s;
+    cin>>s;
+    int open=0, close=0;    
+    for(int i=0;i<n; i++){
+        if(s[i]=='(')open++;
+        else close++;
     }
-};
+    if(open!=close){
+        cout<<-1<<endl;
+        return;
+    }
 
-Node* create(vi v){
-    Node* head = new Node(v[0]);
-    queue<Node*> q;
-    q.push(head);
-    int n=v.size();
-    int i=1;
-    while(i < n){
-        Node* temp = q.front();
-        q.pop();
-        temp->left = new Node(v[i++]);
-        q.push(temp->left);
-        if(i<n){
-            temp->right = new Node(v[i++]);
-            q.push(temp->right);
+    vector<int>ans(n,0);
+    int cur = s[0] == '(' ? 1:2;
+    int cnt = 0;
+    for(int i=0; i<n; i++){
+        if(cnt == 0){
+           cur = s[i] == '(' ? 1:2; 
+        }
+        if(s[i]=='(') cnt++;
+        else{
+            cnt--;
+        }
+        ans[i]=cur;
+    }
+
+    int type = 1;
+    for(int i=0; i<n-1; i++){
+        if(ans[i]!=ans[i+1]) {
+            type++; break;
         }
     }
-    return head;
+    if(type==1){
+        cout<<1<<endl;
+        for(int i=0; i<n; i++){
+        cout<<1<<" ";
+        }
+    }else{
+        cout<<2<<endl;
+        for(int i=0; i<n; i++){
+        cout<<ans[i]<<" ";
+        }
+    }
+    cout<<endl;
+    
 }
 
-void inOrder(Node* head){
-    if(!head) return;
-     
-    inOrder(head->left);
-    cout<<head->data<<" ";
-    inOrder(head->right);
-    return;
-}
-
-
-int main(){
+signed main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
     int t; cin>>t;
-    while(t--){
-        int n; cin>>n;
-        vector<int> a(n);
-        int c0=0, c1=0;
-        for(int i=0; i<n; i++) {
-            cin>>a[i];
-            if(a[i]&1)
-                c1++;
-            else
-                c0++;
-        }
-        if(c0>=1){
-            cout<<c1+1<<endl;
-        }else{
-            cout<<c1-1<<endl;
-        }
-        
-    }
+    while(t--)
+    solve();
+    
+    return 0;
 }
