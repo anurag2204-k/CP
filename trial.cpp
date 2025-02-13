@@ -177,24 +177,62 @@ void inOrder(Node* head){
 }
 
 
+
+void solve(){
+    int n, k; 
+    cin >> n >> k; 
+    
+    vector<long long > v(n);
+    for(int i=0; i<n; i++) cin>>v[i];
+    vector<int> com(n,0);
+
+    for(int i=1; i<n; i++){
+        if(v[i-1]<v[i]*2) com[i]=1;
+    }
+
+    int sum = 0;
+    for(int i=0; i<=k; i++){
+        sum+=com[i];
+    }
+
+    int ans = 0;
+
+    for(int i=1; i<n-k; i++){
+        if(sum == k) ans++;
+        sum -= com[i];
+        sum += com[i+k];
+    }
+    if(sum ==k ) ans++;
+    cout<<ans<<endl;
+
+
+    // for(int i=0; i<n-k; i++){
+    //     bool flag = true;
+    //     for(int j=i; j<i+k; j++){
+    //         long long one = v[j] * (long long)(1<<(j-i));
+    //         long long two = v[j+1] * (long long )(1<< (j-i+1));
+    //         // cout<<one<<" "<<two<<endl;
+    //         if(one>=two) {
+    //             flag = false;
+    //             break;
+    //         }
+    //     }
+    //     // cout<<endl;
+    //     if(flag){
+    //         ans++;
+    //     }
+    // }
+    // cout<<ans<<endl;
+}
+
+
 int main(){
-    int t; cin>>t;
-    while(t--){
-        int n; cin>>n;
-        vector<int> a(n);
-        int c0=0, c1=0;
-        for(int i=0; i<n; i++) {
-            cin>>a[i];
-            if(a[i]&1)
-                c1++;
-            else
-                c0++;
-        }
-        if(c0>=1){
-            cout<<c1+1<<endl;
-        }else{
-            cout<<c1-1<<endl;
-        }
-        
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int t; 
+    cin >> t;
+    while (t--) {
+        solve();
     }
 }
