@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define int long long int
 #define d1(x) cout << #x << ": " << x << endl
 #define d2(x, y) cout << #x << ": " << x << " | " << #y << ": " << y << endl
 #define d3(x, y, z) cout << #x << ":" << x << " | " << #y << ": " << y << " | " << #z << ": " << z << endl
@@ -196,28 +195,47 @@ void inOrder(Node* head){
 //     cout<<ans<<endl;
 // }
 
-signed main() {
+int solve(int n, vi arr, int mvalue) {
+    vi freq(mvalue+1, 0);
+    int lonz = 0;
+    int pfnz = 0; 
+    f(i, 0, n){
+        freq[arr[i]]++;
+    }
+    
+    int z=(int)freq.size();
+    f(x,1,z){
+        lonz += (freq[x] % 2);
+        pfnz += freq[x] / 2;
+    }
+    int zc = freq[0];
+    
+    int tz = zc + pfnz;
+    int fz = (tz > 0) ? 1 : 0;
+    
+    return lonz + fz;
+
+}
+
+int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     
-    // int t;
-    // cin >> t;
-    // while(t--) {
-    //     solve();
-    // }
+    int t;
+    cin >> t;
+    while(t--) {
+        int n; cin>>n;
+        vi arr(n);
+        int mvalue = 0;
 
-    int n; cin>>n;
-    int diff;
-    unordered_map<int,int>mp;
-    int ans=0;
-    vector<int>v(n+1), dif(n+1);
-    for(int i=1; i<=n; i++){
-        cin>>v[i];
-        diff = v[i] - i;
-        mp[diff] += v[i];
-        ans = max(ans, mp[diff]);
+        f(i, 0, n){
+            cin >> arr[i];
+            mvalue = max(mvalue, arr[i]);
+        }
+        cout<<solve(n,arr,mvalue)<<endl;
     }
-    cout<<ans;
+
+    
 
     return 0;
 }

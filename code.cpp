@@ -1,57 +1,87 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
+#include <algorithm>
 using namespace std;
-
-const int MOD = 998244353;
-const int NMAX = 200005;
-
-vector<long long> power2(NMAX, 1), invPower2(NMAX, 1);
-
-void precompute_powers() {
-    long long inv2 = 499122177; // Modular inverse of 2 mod MOD
-    for (int i = 1; i < NMAX; i++) {
-        power2[i] = (power2[i - 1] * 2) % MOD;
-        invPower2[i] = (invPower2[i - 1] * inv2) % MOD;
-    }
+ 
+#define vll vector<long long>
+#define pi pair<int, int>
+#define vi vector<int>
+#define vpi vector<pi>
+#define mi map<int, int>
+#define umi unordered_map<int, int>
+#define mll map<long long, long long>
+#define dd double
+#define f(i, a, b) for (int i = a; i < b; i++)
+#define fr(i, a, b) for (int i = a; i >= b; i--)
+ 
+#define ll long long int
+#define pb push_back
+// #define lcm(a, b) ((a) * (b)) / __gcd(a, b)
+#define mp make_pair
+#define in insert
+#define fi first
+// #define lb lower_bound
+#define ub upper_bound
+#define se second
+#define all(v) (v).begin(), (v).end()
+const int MOD = 1e9 + 7;
+ 
+ 
+void read(){
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
 }
-
-void solve() {
-    precompute_powers();
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-    }
-    
-    long long result = 0, sumOnes = 0;
-    int count1 = 0, count2 = 0;
-    
-    for (int i = 0; i < n; i++) {
-        if (a[i] == 1) {
-            sumOnes = (sumOnes + invPower2[count2]) % MOD;
-            count1++;
-        } else if (a[i] == 2) {
-            count2++;
-        } else if (a[i] == 3) {
-            long long contrib = ((power2[count2] * sumOnes) % MOD - count1 + MOD) % MOD;
-            result = (result + contrib) % MOD;
-        }
-    }
-    
-    cout << result << "\n";
-}
-
-int main() {
-    ios::sync_with_stdio(false);
+ 
+void faster(){
+    ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
+}
+ 
+ 
+// int main() {
+//     read();
+//     faster();
+//     // Your code here
+ 
+ 
     
-    int t;
-    cin >> t;
-    while (t--) {
-        solve();
+//     return 0;
+ 
+// }
+ 
+const int N = 100'000;
+ 
+void solve(){
+    int n, m;
+    cin>>m>>n;
+    if(n==1){
+        cout<<0<<endl;
+    }else if(m==1){
+        cout<<2<<endl;
+    }else if(n>m){
+        cout<<m+1<<endl;
+    }else{
+        cout<<min(n,m)<<endl;
     }
-
+    for(int i=0; i<m; i++){
+        int begining = (i+1)%n == 0 ? 1 : (i+1)%n;
+        for(int j = 0; j<n ;j++){
+            cout<< (begining + j)%(n)<<" ";
+        }
+        cout<<endl;
+    }
+ 
+}
+ 
+ 
+ 
+int main() {
+    faster();
+    #ifndef ONLINE_JUDGE
+        read();
+    #endif
+    
+    int t; cin >> t;
+    while(t--)
+        solve(); 
     return 0;
 }
