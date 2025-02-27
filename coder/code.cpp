@@ -51,25 +51,61 @@ void faster(){
 const int N = 100'000;
  
 void solve(){
-    int n, m;
-    cin>>m>>n;
-    if(n==1){
-        cout<<0<<endl;
-    }else if(m==1){
-        cout<<2<<endl;
-    }else if(n>m){
-        cout<<m+1<<endl;
-    }else{
-        cout<<min(n,m)<<endl;
+    int n; 
+    cin>>n;
+    vll a(n);
+    f(i, 0, n) cin>>a[i];
+    vector<bool> b(n+1, false);
+    f(i, 0, n){
+        if(a[i]<=n)
+        b[a[i]]=true;
     }
-    for(int i=0; i<m; i++){
-        int begining = (i+1)%n == 0 ? 1 : (i+1)%n;
-        for(int j = 0; j<n ;j++){
-            cout<< (begining + j)%(n)<<" ";
+    ll mex = 0;
+    f(i, 0, n+1){
+        if(b[i]==false){
+            mex = i;
+            break;
         }
-        cout<<endl;
     }
- 
+    ll mex2 = mex+1;
+    int left = 0, right = n-1;
+    f(i, 0, n){
+        if(a[i]==mex2)
+        {
+            left = i;
+            break;
+        }
+    }
+    f(i, n-1, 0){
+        if(a[i]==mex2){
+            right = i;
+            break;
+        }
+    }
+    f(i, 0, n){
+        b[i] = false;
+    }
+    f(i,0,left){
+        if(a[i]<=n)
+        b[a[i]]=true;
+    }
+    f(i, right+1, n){
+        if(a[i]<=n)
+        b[a[i]]=true;
+    }
+    ll mex3 = 0;
+    f(i, 0, n+1){
+        if(b[i]==false){
+            mex3 = i;
+            break;
+        }
+    }
+    cout<<left<<" "<<right<<endl;
+    if(mex3==mex){
+        cout<<"YES"<<endl;
+    }else{
+        cout<<"NO"<<endl;
+    }
 }
  
  
