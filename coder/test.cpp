@@ -28,7 +28,6 @@ bool compareFiles(const std::string& file1, const std::string& file2, std::ofstr
     return areIdentical;
 }
 void test_main(){
-
     std::string answerFile = "answer.txt";
     std::string outputFile = "output.txt";
     std::ofstream resultFile("testresult");

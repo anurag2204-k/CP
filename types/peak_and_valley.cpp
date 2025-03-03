@@ -55,33 +55,38 @@ void faster(){
 #endif
 
 void solve(){
-    int a, b, p; cin>>a>>b>>p;
-    string s; cin>>s;
-    int n = s.size();
+    int n, q;
+    cin >> n >> q;
+    vi a(n);
+    cin >> a;
 
-    vll dp(n, 0);
-    fr(i, n-2, 0){
-        if(s[i]!=s[i-1]){
-            if(s[i]=='A') dp[i] = a;
-            else dp[i] = b;
+    int cur = a[0];
+    bool flip = true;
+    ll total = 0;
+    f(i, 1, n){
+        if(flip){
+            if(a[i]>a[i-1]){
+                cur = a[i];
+            }else{
+                total += cur;
+                cur = a[i];
+                flip = !flip;
+            }
+        }else{
+            if(a[i]<a[i-1]){
+                cur = a[i];
+            }else{
+                total -= cur;
+                cur = a[i];
+                flip = !flip;
+            }
         }
     }
-    for(int i = 1; i<n; i++){
-        if(dp[i]==0) swap(dp[i], dp[i-1]);
+    if(flip){
+        total += cur;
     }
-    fr(i, n-2, 0){
-        dp[i]+=dp[i+1];
-    }
-    dp[n-1] = 0;
-    // cout<<dp; nl;
-    for(int i=0; i<n; i++){
-        if(dp[i]<=p){
-            cout<<i+1; nl;
-            return;
-        }
-    }
-    cout<<n; nl;
-    
+
+    cout << total; nl;
 }
     
 
