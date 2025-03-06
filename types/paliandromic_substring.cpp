@@ -44,3 +44,46 @@ int main() {
     cout << "Length of longest palindromic substring: " << longestPalindromeSubstring(s) << endl;
     return 0;
 }
+
+
+
+
+
+// another -----------------------------------------------------------------------------------------------------------------------------
+
+class Solution {
+    public:
+        string longestPalindrome(string s) {
+            int n = s.size();
+            vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0));
+    
+            string t = s;
+            reverse(t.begin(), t.end());
+    
+            int maxLength = 0;
+            int endIndex = 0;
+    
+            for (int i = 1; i <= n; i++) {
+                for (int j = 1; j <= n; j++) {
+                    if (s[i - 1] == t[j - 1]) {
+                        dp[i][j] = 1 + dp[i - 1][j - 1];
+    
+                        // Map reverse index back to original index
+                        int originalIndex = n - j;
+    
+                        // Ensure substring is a valid palindrome
+                        if (originalIndex + dp[i][j] - 1 == i - 1) {
+                            if (dp[i][j] > maxLength) {
+                                maxLength = dp[i][j];
+                                endIndex = i;
+                            }
+                        }
+                    }
+                }
+            }
+    
+            // Extract the longest palindromic substring
+            return s.substr(endIndex - maxLength, maxLength);
+        }
+    };
+    

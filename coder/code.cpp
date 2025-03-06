@@ -37,7 +37,6 @@ template<typename typC> ostream &operator<<(ostream &cout,const vector<typC> &a)
 // ===================================END Of the input module ==========================================
  
 
-
 const int MOD = 1e9 + 7;
 
 void read(){
@@ -54,36 +53,16 @@ void faster(){
     #include "test.cpp"
 #endif
 
-void solve(){
-    int a, b, p; cin>>a>>b>>p;
-    string s; cin>>s;
-    int n = s.size();
+const int N = 100'000;
 
-    vll dp(n, 0);
-    fr(i, n-2, 0){
-        if(s[i]!=s[i-1]){
-            if(s[i]=='A') dp[i] = a;
-            else dp[i] = b;
-        }
-    }
-    for(int i = 1; i<n; i++){
-        if(dp[i]==0) swap(dp[i], dp[i-1]);
-    }
-    fr(i, n-2, 0){
-        dp[i]+=dp[i+1];
-    }
-    dp[n-1] = 0;
-    // cout<<dp; nl;
-    for(int i=0; i<n; i++){
-        if(dp[i]<=p){
-            cout<<i+1; nl;
-            return;
-        }
-    }
-    cout<<n; nl;
-    
+void solve(){
+   int n;
+   cin>>n;
+   vi a(n);
+   
 }
-    
+
+
 
 
 int main() {
@@ -93,7 +72,7 @@ int main() {
         read();
     #endif
     
-    ll t;
+    int t; 
     cin >> t;
     
     while (t--) 
@@ -107,4 +86,3 @@ int main() {
 
     return 0;
 }
-

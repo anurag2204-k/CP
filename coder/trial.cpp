@@ -55,58 +55,46 @@ void faster(){
 
 const int N = 100'000;
 
-void solve(){int n=1,k=0;
-    string s;
-    cin>>n;
-    vi v(n);
-    int prev=0;
-    cin>>v;
-    vi a(n,0),b(n,0);
-    unordered_set<int> as,bs;
-    for(int i=0;i<n;i++){
-        if(!as.count(v[i])){
-            as.insert(v[i]);
-            a[i]=v[i];
-        }
-        else if(!bs.count(v[i])){
-            bs.insert(v[i]);
-            b[i]=v[i];
-        }
-        else{
-            cout<<"NO\n";
-            return;
-        }
+int fun(int n, int i){
+    if(i == n) return 0;
+    if(i > n) return 1e9;
+    if(i==0){
+        return 1 + fun(n, i+1);
     }
-    set<int> rema,remb;
-    for(int i=1;i<=n;i++){
-        if(!as.count(i))    rema.insert(i);
-        if(!bs.count(i))    remb.insert(i);
+    int one = 1 + fun(n, i+1);
+    int two = 1 + fun(n, i*2);
+    return min(one, two);
+}
+
+// void solve() {
+//     int n;
+//     cin >> n;
+    
+//     vi dp(n + 1, 1e9);
+//     dp[n] = 0;
+    
+//     for (int i = n - 1; i >= 0; i--) {
+//         dp[i] = dp[i + 1] + 1;
+//         if (i * 2 <= n) {
+//             dp[i] = min(dp[i], 1 + dp[i * 2]);
+//         }
+//     }
+
+//     cout << dp[0];
+//     nl;
+// }
+
+void solve(){
+    int n; cin>>n;
+    vi dp(n+1, 1e9);
+    dp[n] = 0;
+    for(int i= n-1; i>=0; i--){
+        if(i*2<=n) dp[i] = min(dp[i+1]+1, 1+dp[i*2]);
+        else dp[i] = dp[i+1]+1;
     }
-    for(int i=0;i<n;i++){
-        if(a[i]==0){
-            auto it=rema.upper_bound(b[i]);
-            if(it==rema.begin()){
-                cout<<"NO\n";
-                return;
-            }
-            --it;
-            a[i]=*it;
-            rema.erase(it);
-        }
-        if(b[i]==0){
-            auto it=remb.upper_bound(a[i]);
-            if(it==remb.begin()){
-                cout<<"NO\n";
-                return;
-            }
-            it--;
-            b[i]=*it;
-            remb.erase(it);
-        }
-    }
-    cout<<"YES\n";
-    cout<<a<<" \n";
-    cout<<b<<" \n";
+
+    cout<<dp[0];
+    nl;
 }
 
 
